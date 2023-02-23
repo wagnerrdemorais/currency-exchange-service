@@ -1,6 +1,7 @@
 package com.moraisrwagner.currencyexchangeservice.controller;
 
 import com.moraisrwagner.currencyexchangeservice.bean.CurrencyExchange;
+import com.moraisrwagner.currencyexchangeservice.service.CurrencyExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 public class CurrencyExchangeController {
 
     private final Environment environment;
+    private final CurrencyExchangeService currencyExchangeService;
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(
@@ -21,6 +23,8 @@ public class CurrencyExchangeController {
             @PathVariable String to) {
 
         var port = environment.getProperty("local.server.port");
-        return new CurrencyExchange(1L, from, to, BigDecimal.TEN, port);
+        CurrencyExchange byFromAndTo = currencyExchangeService.findByFromAndTo(from, to);
+        byFromAndTo.setEnvironment(port);
+        return byFromAndTo;
     }
 }
