@@ -1,5 +1,6 @@
 package com.moraisrwagner.currencyexchangeservice.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,15 @@ public class CircuitBreakerController {
         return response.getBody();
     }
 
-    public String hardcodedResponse(Exception exception) {
+    @GetMapping("/sample-api-circuit-breaker")
+    @CircuitBreaker(name = "sample-api", fallbackMethod = "hardcodedResponse")
+    public String sampleApiCircuitBreaker() {
+        log.info("Sample Api Circuit Breaker call");
+        var response = new RestTemplate().getForEntity("http://localhost:8080/nothing", String.class);
+        return response.getBody();
+    }
+
+    private String hardcodedResponse(Exception exception) {
         return "fallback-response";
     }
 }
