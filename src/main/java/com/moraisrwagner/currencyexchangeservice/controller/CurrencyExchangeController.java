@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @AllArgsConstructor
@@ -16,6 +17,9 @@ public class CurrencyExchangeController {
 
     private final Environment environment;
     private final CurrencyExchangeService currencyExchangeService;
+
+    private final RestTemplate restTemplate;
+
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(
