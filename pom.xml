@@ -14,7 +14,8 @@
 	<name>currency-exchange-service</name>
 	<description>Centralized Configuration Server</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
+<!--		<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>-->
 		<spring-cloud.version>2022.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -104,6 +105,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<name>moraisrwagner/microservices-${project.artifactId}:${project.version}</name>
+						<builder>dashaun/builder:tiny</builder>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
