@@ -107,7 +107,6 @@
 				<configuration>
 					<image>
 						<name>moraisrwagner/microservices-${project.artifactId}:${project.version}</name>
-						<builder>dashaun/builder:tiny</builder>
 					</image>
 					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
 					<excludes>
